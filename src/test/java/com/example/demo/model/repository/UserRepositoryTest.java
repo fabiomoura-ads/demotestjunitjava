@@ -25,8 +25,10 @@ public class UserRepositoryTest {
 	@Test
 	public void deveEncontrarUmUsuarioPorEmailInformado() {
 		//cenário
-		String email = "aa@email.com";
-		User user = User.builder().name("bb").email(email).password("123").build();		
+		String nome = "fulano";
+		String email = "fulano@email.com";
+		String senha = "123456";
+		User user = User.builder().name(nome).email(email).password(senha).build();		
 		entityManager.persist(user);
 		
 		//ação
@@ -40,12 +42,12 @@ public class UserRepositoryTest {
 	@Test
 	public void naoDeveEncontrarUmUsuarioPorEmailInformado() {
 		//cenário
-		String email = "aa@email.com";
-		User user = User.builder().name("bb").email(email).password("123").build();	
+		String email = "fulano@email.com";
+		User user = User.builder().name("fulano").email(email).password("123456").build();	
 		entityManager.persist(user);
 		
 		//ação
-		boolean exists = repository.existsByEmail("bb@email.com");
+		boolean exists = repository.existsByEmail("sicrano@email.com");
 		
 		//verificaçãot
 		Assertions.assertFalse(exists);

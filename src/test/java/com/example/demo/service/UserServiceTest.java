@@ -35,7 +35,7 @@ public class UserServiceTest {
 		Mockito.when(repository.existsByEmail(Mockito.anyString())).thenReturn(false);
 		
 		//ação
-		String email = "aa@email.com";
+		String email = "fulano@email.com";
 		service.validateEmail(email);		
 	}
 
@@ -45,7 +45,7 @@ public class UserServiceTest {
 		Mockito.when(repository.existsByEmail(Mockito.anyString())).thenReturn(true);
 		
 		//ação
-		String email = "aa@email.com";
+		String email = "fulano@email.com";
 		
 		Throwable exception = Assertions.catchThrowable(() -> service.validateEmail(email));
 		Assertions.assertThat(exception).isInstanceOf(RegraNegocioException.class);				
@@ -86,7 +86,7 @@ public class UserServiceTest {
 		Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
 		
 		//ação
-		Throwable exception = Assertions.catchThrowable(() -> service.authenticate("ee@email.com", "1234"));
+		Throwable exception = Assertions.catchThrowable(() -> service.authenticate("sincrano@email.com", "123456"));
 		
 		//verificação		
 		Assertions.assertThat(exception).isInstanceOf(AuthenticateException.class);		
@@ -99,7 +99,7 @@ public class UserServiceTest {
 		Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(Optional.of(user));
 		
 		//ação
-		Throwable exception = Assertions.catchThrowable(() -> service.authenticate("a@email.com", "123456"));
+		Throwable exception = Assertions.catchThrowable(() -> service.authenticate("fulanao@email.com", "12345678"));
 		
 		//verificação
 		Assertions.assertThat(exception).isInstanceOf(AuthenticateException.class).hasMessage("Senha inválida.");		
@@ -113,13 +113,13 @@ public class UserServiceTest {
 		Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(Optional.of(user));
 		
 		//ação
-		User userAutenticado = service.authenticate("a@email.com", "123");
+		User userAutenticado = service.authenticate("fulano@email.com", "123456");
 		
 		//verificação
 		Assertions.assertThat(userAutenticado.getId()).isNotNull();
 	}
 	
 	public User retornUsuario() {		
-		return User.builder().name("aa").email("aa@email.com").password("123").build();
+		return User.builder().name("fulano").email("fulano@email.com").password("123456").build();
 	}
 }
